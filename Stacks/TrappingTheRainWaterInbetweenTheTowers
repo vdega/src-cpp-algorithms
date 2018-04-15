@@ -1,0 +1,55 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int main() {
+
+  int heightofTower[]={1,5,1,2,3,4,0,2};
+  int maxright[8]={0,};
+  int maxleft[8]={0,};
+
+  int i,j,maxseenleft=0,maxseenright=0,rainwater=0;
+
+  int k;j=sizeof(heightofTower)/sizeof(heightofTower[0]);
+  j=j-1;
+
+  for(i=0,k=j;j>=0,i<=k;i++,j--)
+  {
+    if(heightofTower[j]>maxseenright)
+    {
+      maxseenright = heightofTower[j];
+      maxright[j] = maxseenright;
+    }
+    else
+    {
+      maxright[j] = maxseenright;
+    }
+
+
+    if(heightofTower[i]>maxseenleft)
+    {
+      maxseenleft = heightofTower[i];
+      maxleft[i] = maxseenleft;
+    }
+    else
+    {
+      maxleft[i] = maxseenleft;
+    }
+
+  }
+
+
+  for(i=0;i<k;i++)
+  {
+
+    //cout<<maxleft[i]<<"  "<<maxright[i]<<endl;
+
+    rainwater = rainwater+max( min(maxleft[i],maxright[i]) - heightofTower[i],0);
+  }
+
+  cout<<"rainwater = "<<rainwater<<endl;
+
+
+}
