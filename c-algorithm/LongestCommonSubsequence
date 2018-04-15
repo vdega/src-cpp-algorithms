@@ -1,0 +1,53 @@
+/* Longest common subsequence -
+Sequence is - common characters in two strings which are need not to be adjacent.
+*/
+//Dynamic programming
+/*
+- Create a temp[m][n] array -> m=strlen(str1) , n=strlen(str2)
+- Fill the 2D array based on the following conditions.
+    1.fill 0th row and 0th column with zeros
+    2.If letter match in two strings then temp[i][j] = top diagonal value +1
+    3.Letters dont match then temp[i][j] = max(top , left) value.
+- At the end right bottom corner element value is the length of LCS.
+*/
+
+//This only gives the length of the common LCS.
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str1[]="MZJAWXU";
+    char str2[]="XMJYAUZ";
+    int i,j,m=strlen(str1),n=strlen(str2),len=0;
+    int temp[m][n];
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            if(i==0||j==0) //0th row , column fill with zero
+                temp[i][j]=0;
+            else if(str1[i-1]==str2[j-1]) //start from second row and column which is actual string.
+                temp[i][j]=temp[i-1][j-1]+1;// take diagonal value and add 1
+            else
+                temp[i][j]=max(temp[i][j-1],temp[j][i-1]); //max of top or left value
+        }
+    }
+    len = temp[m][n]; //last value is the length
+
+}
+// Now we got the length. We need to retrieve the string by back tracing
+char lcs[len+1] = '\0';
+i=m,j=n;
+
+    while(i>0 && j>0)
+    {
+        //if current letter at i in str1 is same as letter at j in str2, add letter in LCS string.
+        if(str1[i] == str2[j])
+            lcs[len]=str1[i]; //or str2[j] , both are same letters.
+        else if(temp[i-1][j]>temp[i][j-1]) // compare top and left elements in temp.
+            i--;// move left
+        else
+            j--;//move top
+    }
+
