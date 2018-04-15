@@ -1,0 +1,64 @@
+//Longest substring Without repeating characters.
+//Here, String has characters are adjacent.
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+/*
+time complexity is o(n).
+but extra space for the temp array of 256 characters.
+*/
+//This program only prints the length of the substring with out repeating characters.
+//to see the array there is other program.
+int main()
+{
+    int max_len=1,cur_len=1;
+    int prev_index,i;
+    char str[]="bbbbbb";
+    int n=strlen(str);
+    int visit[256]={-1,};
+    /* initialize the temp array as visited array with all '-1'
+        int *visit = (int *)malloc(256);
+        for(i=0;i<256;i++)
+            visit[i] = -1;
+    */
+
+    visit[str[0]]=0; //visit['b']=0; init first element to 0;
+
+    for(i=1;i<n;i++)
+    {
+        //printf("%d ",visit[str[i]]);
+        prev_index = visit[str[i]]; // prev_index is the not visited letter of the str, mostly it is -1;
+
+        if(prev_index == -1 || i-cur_len>prev_index)
+            cur_len++; //if new letter now occured yet the prev_index =-1 and increase cur len.
+        else //if the letter already came then update the max_len and cur_len from new index.
+        {
+            if(cur_len>max_len)
+                max_len=cur_len;
+
+            cur_len=i-prev_index;
+        }
+        visit[str[i]]=i; // this str letter visited so update the value.
+
+    }
+    //printf("%d ",visit[str[i]]);
+
+    if(cur_len>max_len)
+    {
+        max_len=cur_len;
+    }
+
+    printf("max_len = %d\n",max_len);
+
+}
+//=================================================================================
+
+//Below program prints the length and the actual array as well.
+// Maintain the two more variables keep track of the indices of array.
+// start =0 , end =0  , s =0 - update start, end , s
+
+
+
+
+
