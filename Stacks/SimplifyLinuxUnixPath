@@ -1,0 +1,48 @@
+#include <iostream>
+#include<vector>
+#include<stack>
+#include<string>
+#include<list>
+
+using namespace std;
+
+int main() {
+
+  stack<string> st;
+  list<string> lstr;
+  string pathstr("/absf/cdgf/eaf/gfdasda/../");
+  cout<<"String Length : "<<pathstr.length()<<endl;
+
+  //char c='/';
+  //int found =0,f1=0;
+  string str1;
+  for(int i=1;i<=pathstr.length();i++)
+  {
+      //str1.clear();
+      if((pathstr[i]=='/' && pathstr[i+1]=='.') )
+      {
+          if(pathstr[i+2]=='.')
+          {
+            st.pop();
+          }
+      }
+      else{
+      while(pathstr[i]!='/')
+      {
+         str1.append(1,pathstr[i]);
+         i++;
+      }
+      st.push(str1);
+      //cout<<"str : "<<st.top()<<endl;
+      }
+      str1.clear();
+  }
+  while(!st.empty())
+  {
+    string str2;
+    str2=st.top();
+    lstr.push_front(str2);
+    cout<<str2<<endl;
+  }
+
+}
