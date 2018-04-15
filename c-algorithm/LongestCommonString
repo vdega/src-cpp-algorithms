@@ -1,0 +1,72 @@
+/*Longest common substring - Dynamic Programming
+Given two strings find the longest common string.
+Which is adjacent characters.
+*/
+/*Create a temp matrix of m x n. and fill the matrix.
+m = strlen(str1) , n = strlen(str2)
+temp[m][n] is the size of tempmatrix
+
+*/
+
+#include<stdio.h>
+#include<string.h>
+
+
+int main()
+{
+    char str1[]="zxaedybcl";
+    char str2[]="yledybzc";
+    int m = strlen(str1);
+    int n = strlen(str2);
+    int i,j;
+    int temp[m+1][n+1];
+
+    int len=0, row ,col ; //these r to track the max length and the indexes of string.
+
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            if(i==0 || j==0) //first fill the all entries with zeros.
+                temp[i][j] = 0;
+            else if(str1[i-1] == str2[j-1])
+            {
+                temp[i][j]=temp[i-1][j-1]+1; //when the two letters matches then add 1 to the previous diagnal elem.
+                if(len<temp[i][j])
+                {//update the len value from the matrix.
+                    len = temp[i][j];
+                    row = i;
+                    col = j;
+                }
+            }
+            else
+                temp[i][j]=0;
+
+        }
+    }
+    // len is the longest common substring length.
+    printf("longest common string length is %d\n",len);
+}
+
+// Now retrieve the string  by back traversing from bottom to top diagnally.
+// We know the last entry in the matrix which is max length value.
+/*
+Ex: row = 7 , col =6
+len = 4;
+char comstr[len]; //allocate a string of max common length
+while(temp[row][col]!=0)
+{
+    comstr[len] = str1[row]; //or str2[col] - both are same letter
+    row--;
+    col--;//both col , row decrement  , moves diagnally.
+    len--; //since we are filling string from back
+
+}*/
+//comstr will have the actual string.
+
+
+
+
+
+
+
